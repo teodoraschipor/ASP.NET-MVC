@@ -2,6 +2,7 @@
 using MusicApp.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -15,23 +16,27 @@ namespace MusicApp.Controllers
         [HttpGet]
         public ActionResult Index() // listam toate piesele din tabelul songs
         {
-            var songs = libraryContext.Songs.ToList(); // luam piesele intr-o variabila si le listam cu tolist. 
-                                                       // variabila de tip lista
-          //  libraryContext.Songs.Where(x => x.ReleaseYear == DateTime.Now.Year).ToList(); //filtrare dupa an
-          //  libraryContext.Songs.Find(5); //filtrare dupa id
-          //  libraryContext.Songs.Skip(50).Take(10).ToList(); // paginare -- sar peste primele 5 pagini cu cate 10 randuri pe pagina...
-                                                            // si imi arata urmatoarele 10 randuri(cu id-urile intre 51 si 60)
-            
+            // var songs = libraryContext.Songs.ToList(); // luam piesele intr-o variabila si le listam cu tolist. 
+            // variabila de tip lista
+            //  libraryContext.Songs.Where(x => x.ReleaseYear == DateTime.Now.Year).ToList(); //filtrare dupa an
+            //  libraryContext.Songs.Find(5); //filtrare dupa id
+            //  libraryContext.Songs.Skip(50).Take(10).ToList(); // paginare -- sar peste primele 5 pagini cu cate 10 randuri pe pagina...
+            // si imi arata urmatoarele 10 randuri(cu id-urile intre 51 si 60)
+            // libraryContext.Songs.Select(x, x=> Title); // cred ca iti afiseaza toate piesele + campul Title
 
-            return View(songs); // dam mai departe view-ului
+
+            // return View(songs); // dam mai departe view-ului
+            var songs = libraryContext.Songs.Include(x=>x.Album).ToList();//include() face join intre tabele, aduce in piesa respectiva albumul
+            ViewData["songs"] = songs;
+            return View(songs);
         }
 
         //Get: /Songs/Details/{id}
         [HttpGet]
         public ActionResult Details(int id)
         {
-            var song = libraryContext.Songs.Find(id);
-            if(song == null) // daca nu exista cartea cu id-ul dat => eroare:
+            var song = libraryContext.Songs.Include(x => x.Album).FirstOrDefault(x => x.Id == id);
+            if (song == null) // daca nu exista cartea cu id-ul dat => eroare:
             {
                 return HttpNotFound();
             }
@@ -43,6 +48,17 @@ namespace MusicApp.Controllers
         [HttpGet]
         public ActionResult Create()
         {
+            // pentru DROPDOWN
+            var albums = libraryContext.Albums.Select(x => new
+            {
+                AlbumId = x.id,
+                AlbumName = x.Title
+            }).ToList();
+
+         
+            // am introdus un album din dropdown si adaugam in viewbag (=lista de albume) care ajunge in view => nu o sa fie null => nu ne va da eroare(merge)
+            ViewBag.Albums = new SelectList(albums, "AlbumId", "AlbumName");
+
             return View();
         }
 
@@ -65,6 +81,17 @@ namespace MusicApp.Controllers
                 }
                 
             }
+
+            
+            // pentru DROPDOWN:
+            var albums = libraryContext.Albums.Select(x => new
+            {
+                AlbumId = x.id,
+                AlbumName = x.Title
+            }).ToList();
+           
+            ViewBag.Albums = new SelectList(albums, "AlbumId", "AlbumName");
+           
             return View(song); //daca sunt erori...puse in view create
         }
 
@@ -73,7 +100,14 @@ namespace MusicApp.Controllers
         public ActionResult Update(int id)
         {
             var song = libraryContext.Songs.Find(id);
-            if(song == null)
+           /* var albums = libraryContext.Albums.Select(x => new
+            {
+                AlbumId = x.id,
+                AlbumName = x.Title
+            }).ToList();
+
+            ViewBag.Albums = new SelectList(albums, "AlbumId", "AlbumName");*/
+            if (song == null)
             {
                 return HttpNotFound();
             }
@@ -99,7 +133,6 @@ namespace MusicApp.Controllers
 
                     oldSong.Title = song.Title;
                     oldSong.ArtistName = song.ArtistName;
-                    oldSong.ReleaseYear = song.ReleaseYear;
                     oldSong.Purchased = song.Purchased;
 
                     // pana acum am actualizat
@@ -108,13 +141,19 @@ namespace MusicApp.Controllers
                     TryUpdateModel(oldSong);
                     libraryContext.SaveChanges();
 
-                    return RedirectToAction("Index", "Songs"); //navigam intre view-uri. Dupa ce am adaugat=> ma trimite la Songs.
+                    return RedirectToAction("Index", "Songs"); //navigam intre view-uri. Dupa ce am adaugat=> ma trimite la Index.
                 }
                 catch (Exception e)
                 {
                     return Json(new { error = e.Message }, JsonRequestBehavior.AllowGet);
                 }
+              /*  var albums = libraryContext.Albums.Select(x => new
+                {
+                    AlbumId = x.id,
+                    AlbumName = x.Title
+                }).ToList();
 
+                ViewBag.Albums = new SelectList(albums, "AlbumId", "AlbumName");*/
             }
             return View(song); //daca sunt erori...puse in view create
         }

@@ -3,18 +3,24 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details of the song</h2>
+<style>
+    body {
+        background-color: #0c0c0c;
+    }
+</style>
+<span style="COLOR: white">
+    <h2>Details of the song</h2>
 
 
-@{
-    @*TODO:in linie!*@
-    @Html.LabelFor(x => x.Title)
-    <p>@Model.Title</p>
-    @Html.LabelFor(x => x.ArtistName)
-    <p>@Model.ArtistName</p>
-    @Html.LabelFor(x => x.ReleaseYear)
-    <p>@Model.ReleaseYear</p>
-    @Html.LabelFor(x => x.Purchased)
-    <p>@Model.Purchased</p>
-    <hr />
-}
+    @{
+        @*TODO:in linie!*@
+        @Html.LabelFor(x => x.Title)
+        <p>@Model.Title</p>
+        @Html.LabelFor(x => x.ArtistName)
+        <p>@Model.ArtistName</p>
+        @Html.LabelFor(x => x.Purchased)
+        <p>@Model.Purchased</p>
+
+        <hr />
+    }
+</span>

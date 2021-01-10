@@ -1,3 +1,10 @@
+C:\Users\teo\source\repos\MusicApp\obj\Debug\MusicApp.Migrations.NewTable_Songs.resources
+C:\Users\teo\source\repos\MusicApp\obj\Debug\MusicApp.Migrations.NewColumn_Songs_ArtistName.resources
+C:\Users\teo\source\repos\MusicApp\obj\Debug\MusicApp.Migrations.NewTable_Albums.resources
+C:\Users\teo\source\repos\MusicApp\obj\Debug\MusicApp.Migrations.RemoveColumns_Songs_ArtistName_ReleaseYear.resources
+C:\Users\teo\source\repos\MusicApp\obj\Debug\MusicApp.Migrations.NewColumn_Songs_ArtistName1.resources
+C:\Users\teo\source\repos\MusicApp\obj\Debug\MusicApp.csproj.GenerateResource.cache
+C:\Users\teo\source\repos\MusicApp\obj\Debug\MusicApp.csproj.CoreCompileInputs.cache
 C:\Users\teo\source\repos\MusicApp\bin\MusicApp.dll.config
 C:\Users\teo\source\repos\MusicApp\bin\MusicApp.dll
 C:\Users\teo\source\repos\MusicApp\bin\MusicApp.pdb
@@ -76,11 +83,6 @@ C:\Users\teo\source\repos\MusicApp\bin\System.Web.WebPages.Razor.xml
 C:\Users\teo\source\repos\MusicApp\bin\Newtonsoft.Json.xml
 C:\Users\teo\source\repos\MusicApp\bin\Antlr3.Runtime.pdb
 C:\Users\teo\source\repos\MusicApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\teo\source\repos\MusicApp\obj\Debug\MusicApp.csprojAssemblyReference.cache
-C:\Users\teo\source\repos\MusicApp\obj\Debug\MusicApp.csproj.CoreCompileInputs.cache
 C:\Users\teo\source\repos\MusicApp\obj\Debug\MusicApp.csproj.CopyComplete
 C:\Users\teo\source\repos\MusicApp\obj\Debug\MusicApp.dll
 C:\Users\teo\source\repos\MusicApp\obj\Debug\MusicApp.pdb
-C:\Users\teo\source\repos\MusicApp\obj\Debug\MusicApp.Migrations.NewTable_Songs.resources
-C:\Users\teo\source\repos\MusicApp\obj\Debug\MusicApp.csproj.GenerateResource.cache
-C:\Users\teo\source\repos\MusicApp\obj\Debug\MusicApp.Migrations.NewColumn_Songs_ArtistName.resources

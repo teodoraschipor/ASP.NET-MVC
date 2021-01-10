@@ -127,8 +127,10 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AlbumsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SongsController.cs" />
+    <Compile Include="CustomValidations\OnlyInteger.cs" />
     <Compile Include="Data\LibraryContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -141,7 +143,20 @@
     <Compile Include="Migrations\202101081909240_NewColumn_Songs_ArtistName.designer.cs">
       <DependentUpon>202101081909240_NewColumn_Songs_ArtistName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101101132094_NewTable_Albums.cs" />
+    <Compile Include="Migrations\202101101132094_NewTable_Albums.designer.cs">
+      <DependentUpon>202101101132094_NewTable_Albums.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101101512595_RemoveColumns_Songs_ArtistName_ReleaseYear.cs" />
+    <Compile Include="Migrations\202101101512595_RemoveColumns_Songs_ArtistName_ReleaseYear.designer.cs">
+      <DependentUpon>202101101512595_RemoveColumns_Songs_ArtistName_ReleaseYear.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101101535073_NewColumn_Songs_ArtistName1.cs" />
+    <Compile Include="Migrations\202101101535073_NewColumn_Songs_ArtistName1.designer.cs">
+      <DependentUpon>202101101535073_NewColumn_Songs_ArtistName1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Album.cs" />
     <Compile Include="Models\Song.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -193,6 +208,12 @@
     <Content Include="Views\Songs\Details.cshtml" />
     <Content Include="Views\Songs\_SongsListItem.cshtml" />
     <Content Include="Views\Songs\Update.cshtml" />
+    <Content Include="Views\Albums\Index.cshtml" />
+    <Content Include="Views\Albums\_AlbumsListItem.cshtml" />
+    <Content Include="Views\Albums\Create.cshtml" />
+    <Content Include="Views\Albums\Details.cshtml" />
+    <Content Include="Views\Albums\Update.cshtml" />
+    <Content Include="Views\_Style.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202101081906373_NewTable_Songs.resx">
@@ -200,6 +221,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101081909240_NewColumn_Songs_ArtistName.resx">
       <DependentUpon>202101081909240_NewColumn_Songs_ArtistName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101101132094_NewTable_Albums.resx">
+      <DependentUpon>202101101132094_NewTable_Albums.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101101512595_RemoveColumns_Songs_ArtistName_ReleaseYear.resx">
+      <DependentUpon>202101101512595_RemoveColumns_Songs_ArtistName_ReleaseYear.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101101535073_NewColumn_Songs_ArtistName1.resx">
+      <DependentUpon>202101101535073_NewColumn_Songs_ArtistName1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -215,6 +245,7 @@
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
