@@ -1,0 +1,52 @@
+﻿@model MusicApp.Models.Song
+@{
+    ViewBag.Title = "Update";
+}
+
+<h2>Update song</h2>
+
+
+@using (Html.BeginForm())
+{
+    <div class="form-horizontal">
+        @Html.HiddenFor(x => x.Id)
+        <div class="form-group">
+            @Html.LabelFor(x => x.Title, new { @class = "control-label col-md-5" })
+            <div class="col-md-7">
+                @Html.TextBoxFor(x => x.Title, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.ArtistName, new { @class = "control-label col-md-5" })
+            <div class="col-md-7">
+                @Html.TextBoxFor(x => x.ArtistName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.ArtistName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.ReleaseYear, new { @class = "control-label col-md-5" })
+            <div class="col-md-7">
+                @Html.TextBoxFor(x => x.ReleaseYear, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.ReleaseYear, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.Purchased, new { @class = "control-label col-md-5" })
+            <div class="col-md-7">
+                @Html.TextBoxFor(x => x.Purchased, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Purchased, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-6 col-md-9">
+                <input type="submit" value="Update" class="btn btn-success" />
+            </div>
+        </div>
+
+    </div>
+}

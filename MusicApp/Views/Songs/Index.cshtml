@@ -1,0 +1,20 @@
+﻿@* list or table with all songs*@
+@model List<MusicApp.Models.Song>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Songs list</h2>
+
+
+<a href="/songs/create" class="btn btn-success">Add</a>
+
+<hr />
+
+@{
+    @*Listam piesele:*@
+    foreach (var song in Model)
+    {
+        @Html.Partial("_SongsListItem", song)
+    }
+}
