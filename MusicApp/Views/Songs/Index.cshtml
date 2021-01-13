@@ -1,0 +1,27 @@
+﻿@* list or table with all songs*@
+@model List<MusicApp.Models.Song>
+@{
+    ViewBag.Title = "Index";
+}
+
+
+    <h2>Songs list</h2>
+
+
+    <a href="/albums/index" class="btn btn-info" style="float: right;">Browse albums</a>
+    <hr />
+
+    <a href="/songs/create" class="btn btn-success">Add song</a>
+
+    <hr />
+
+    @{
+        @*Listam piesele:*@
+        foreach (var song in Model)
+        {
+
+            @Html.Label("Album", "Album: ") @*Legatura cu Index() din SongsController. In urma join-ului, aici afisez albumul*@
+            <p>@song.Album.Title</p>
+            @Html.Partial("_SongsListItem", song)
+        }
+    }

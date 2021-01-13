@@ -1,0 +1,19 @@
+﻿@model MusicApp.Models.UserViewModel
+@{
+    ViewBag.Title = "Update";
+}
+
+<h2>Edit role</h2>
+
+@using (Html.BeginForm(actionName: "Update", controllerName: "Users", routeValues: new { id = @Model.User.Id }))
+{
+    @Html.HiddenFor(x => x.User.Id)
+
+    <label>Role:</label>
+    @Html.EditorFor(x => x.RoleName, new { htmlAttributes = new { @class = "form-control" } })
+
+
+    <br />
+
+    <button class="btn btn-warning" type="submit">Save changes</button>
+}
