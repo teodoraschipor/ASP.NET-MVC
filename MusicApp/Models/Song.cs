@@ -10,26 +10,21 @@ namespace MusicApp.Models
 {
     public class Song
     {
+
         [Key]
         public int Id { get; set; }
 
         [Required, DisplayName("Song Title")]
         public string Title { get; set; }
 
-
-        [NotMapped, DisplayName("Purchased")] // nu genereaza o coloana pentru purchased. Doar ma folosesc eu de ea
-        public bool Purchased { get; set; }
-
-        [Required(ErrorMessage = "Please select an album")]
-      
+        [Required, DisplayName("Artist Name")]
         public string ArtistName { get; set; }
-    
-   
+
+        
         public int AlbumId { get; set; }
 
-        [DisplayName("Album Name")]
         [ForeignKey("AlbumId")]
-         public Album Album { get; set; }
+        public Album Album { get; set; }
 
     }
 }

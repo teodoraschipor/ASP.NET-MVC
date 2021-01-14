@@ -1,5 +1,4 @@
 ﻿using MusicApp.Models;
-
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -11,12 +10,7 @@ namespace MusicApp.Controllers
 {
     public class SongsController : Controller
     {
-        private readonly ApplicationDbContext _context = new ApplicationDbContext(); // utilizam context-ul pentru a putea opera cu baza de date
-        public SongsController()
-        {
-           
-        }
-
+        private readonly ApplicationDbContext libraryContext = new ApplicationDbContext(); // utilizam context-ul pentru a putea opera cu baza de date
         // GET: /Songs/Index
         [HttpGet]
         public ActionResult Index() // listam toate piesele din tabelul songs
@@ -31,156 +25,147 @@ namespace MusicApp.Controllers
 
 
             // return View(songs); // dam mai departe view-ului
-
-              var songs = _context.Songs.Include(x=>x.Album).ToList();//include() face join intre tabele, aduce in piesa respectiva albumul
-              ViewData["songs"] = songs;
-             return View(songs);
-            //return View();
+            var songs = libraryContext.Songs.Include(x=>x.Album).ToList();//include() face join intre tabele, aduce in piesa respectiva albumul
+            ViewData["songs"] = songs;
+            return View(songs);
         }
 
-
         //Get: /Songs/Details/{id}
-           [HttpGet]
-           public ActionResult Details(int id)
-           {
-               var song = _context.Songs.Include(x => x.Album).FirstOrDefault(x => x.Id == id);
-               if (song == null) // daca nu exista cartea cu id-ul dat => eroare:
-               {
-                   return HttpNotFound();
-               }
+        [HttpGet]
+        public ActionResult Details(int id)
+        {
+            var song = libraryContext.Songs.Include(x => x.Album).FirstOrDefault(x => x.Id == id);
+            if (song == null) // daca nu exista cartea cu id-ul dat => eroare:
+            {
+                return HttpNotFound();
+            }
 
-               return View(song);
-           }
+            return View(song);
+        }
 
-           //Get: /Songs/Create
-           [HttpGet]
-           public ActionResult Create()
-           {
-               // pentru DROPDOWN
-               var albums = _context.Albums.Select(x => new
-               {
-                   AlbumId = x.id,
-                   AlbumName = x.Title
-               }).ToList();
+        //Get: /Songs/Create
+        [HttpGet]
+        public ActionResult Create()
+        {
+            // pentru DROPDOWN
+            var albums = libraryContext.Albums.Select(x => new
+            {
+                AlbumId = x.id,
+                AlbumName = x.Title
+            }).ToList();
 
+         
+            // am introdus un album din dropdown si adaugam in viewbag (=lista de albume) care ajunge in view => nu o sa fie null => nu ne va da eroare(merge)
+            ViewBag.Albums = new SelectList(albums, "AlbumId", "AlbumName");
 
-               // am introdus un album din dropdown si adaugam in viewbag (=lista de albume) care ajunge in view => nu o sa fie null => nu ne va da eroare(merge)
-               ViewBag.Albums = new SelectList(albums, "AlbumId", "AlbumName");
+            return View();
+        }
 
-               return View();
-           }
-
-           //POST: /Songs/Create
-           [HttpPost]
-           public ActionResult Create(Song song)
-           {
-           
+        //POST: /Songs/Create
+        [HttpPost]
+        public ActionResult Create(Song song)
+        {
             if (ModelState.IsValid) // verif. daca modelul este valid
-               {
-                     _context.Songs.Add(song); // face un INSERT in baza de date. Aici e entityFramework
-                                                 // entityFramework are grija sa nu duplicam date, sa nu apara conflicte
-                     _context.SaveChanges(); // echivalent cu un COMMIT
+            {
+                try
+                {
+                    libraryContext.Songs.Add(song); // face un INSERT in baza de date. Aici e entityFramework
+                                                    // entityFramework are grija sa nu duplicam date, sa nu apara conflicte
+                    libraryContext.SaveChanges(); // echivalent cu un COMMIT
+                  //  var oldAlbum = libraryContext.Albums.Find(album.id);
+                   // List<Song> list = (List<Song>)libraryContext.Albums.Select(x => x.SongsList);
+                   // list.Add(song);
+                   // libraryContext.SaveChanges();
+                    return RedirectToAction("Create", "Songs"); //navigam intre view-uri. Dupa ce am adaugat=> ma trimite la Songs.
+                }
+                catch(Exception e)
+                {
+                    return Json(new { error = e.Message }, JsonRequestBehavior.AllowGet);
+                }
+                
+            }
 
-                     return RedirectToAction("Index", "Songs"); //navigam intre view-uri. Dupa ce am adaugat=> ma trimite la Songs.
-               }
+            
+            // pentru DROPDOWN:
+            var albums = libraryContext.Albums.Select(x => new
+            {
+                AlbumId = x.id,
+                AlbumName = x.Title
+            }).ToList();
+           
+            ViewBag.Albums = new SelectList(albums, "AlbumId", "AlbumName");
+           
+            return View(song); //daca sunt erori...puse in view create
+        }
 
-               // pentru DROPDOWN:
-               var albums = _context.Albums.Select(x => new
-               {
-                   AlbumId = x.id,
-                   AlbumName = x.Title
-               }).ToList();
+        //GET: /Songs/Update/{id}
+        [HttpGet]
+        public ActionResult Update(int id)
+        {
+            var album = libraryContext.Songs.Find(id);
 
-               ViewBag.Albums = new SelectList(albums, "AlbumId", "AlbumName");
+            if (album == null)
+            {
+                return HttpNotFound();
+            }
 
-               return View(song); //daca sunt erori...puse in view create
-           }
+            return View(album);
+        }
 
-           //GET: /Songs/Update/{id}
-           [HttpGet]
-           public ActionResult Update(int id)
-           {
-               var song = _context.Songs.Find(id);
-              // var albums = libraryContext.Albums.Select(x => new
-              // {
-              //     AlbumId = x.id,
-              //     AlbumName = x.Title
-              // }).ToList();
+        // POST: /authors/update
+        [HttpPost]
+        public ActionResult Update(Song song)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var oldAlbum = libraryContext.Songs.Find(song.Id);
 
-   //            ViewBag.Albums = new SelectList(albums, "AlbumId", "AlbumName");
-               if (song == null)
-               {
-                   return HttpNotFound();
-               }
+                    if (oldAlbum == null)
+                    {
+                        return HttpNotFound();
+                    }
 
+                    oldAlbum.Title = song.Title;
+                    oldAlbum.ArtistName = song.ArtistName;
+                   
 
-               return View(song);
-           }
+                    TryUpdateModel(oldAlbum);
 
-           //POST: /Songs/Update 
-           [HttpPost]
-           public ActionResult Update(Song song)
-           {
-               if (ModelState.IsValid) // verif. daca modelul este valid
-               {
-                   try
-                   {
-                       var oldSong = _context.Songs.Find(song.Id); // iau piesa veche (o gasesc in functie de id)
+                    libraryContext.SaveChanges();
 
-                       if(oldSong == null) // daca s-a schimbat id-ul din view => nu mai gaseste cartea:
-                       {
-                           return HttpNotFound();
-                       }
+                    return RedirectToAction("Index", "Songs");
+                }
+            }
+            catch (Exception e)
+            {
+                return Json(new { error_message = e.Message }, JsonRequestBehavior.AllowGet);
+            }
 
-                       oldSong.Title = song.Title;
-                       oldSong.ArtistName = song.ArtistName;
-                       oldSong.Purchased = song.Purchased;
+            return View(song);
+        }
+            //POST: /Songs/Delete/{id}
+            [HttpPost]
+        public ActionResult Delete(int id) 
+        {
+            /*
+             1. verificare existenta obiectului(find/where)
+             2. stergerea efectiva
+             3. commit
+             4. return to index
+             */
+            var song = libraryContext.Songs.Find(id);
 
-                       // pana acum am actualizat
-                       // => trebuie sa publicam modificarile:
+            if(song == null)
+            {
+                return HttpNotFound();
+            }
+            libraryContext.Songs.Remove(song);
+            libraryContext.SaveChanges();
 
-                       TryUpdateModel(oldSong);
-                    _context.SaveChanges();
-
-                       return RedirectToAction("Index", "Songs"); //navigam intre view-uri. Dupa ce am adaugat=> ma trimite la Index.
-                   }
-                   catch (Exception e)
-                   {
-                       return Json(new { error = e.Message }, JsonRequestBehavior.AllowGet);
-                   }
-                 //  var albums = libraryContext.Albums.Select(x => new
-                 //  {
-                 //      AlbumId = x.id,
-                 //      AlbumName = x.Title
-                 //  }).ToList();
-
-                //   ViewBag.Albums = new SelectList(albums, "AlbumId", "AlbumName");
-               }
-               return View(song); //daca sunt erori...puse in view create
-           }
-
-           //POST: /Songs/Delete/{id}
-           [HttpPost]
-           public ActionResult Delete(int id) 
-           {
-
-               // 1. verificare existenta obiectului(find/where)
-                //2. stergerea efectiva
-               // 3. commit
-               // 4. return to index
-
-               var song = _context.Songs.Find(id);
-
-               if(song == null)
-               {
-                   return HttpNotFound();
-               }
-            _context.Songs.Remove(song);
-            _context.SaveChanges();
-
-               return RedirectToAction("Index"); 
-               // putem scrie RedirectToAction DOAR cu actiunea (FARA controller) daca vrem sa ne intoarcem in acelasi controller
-           }
-    
+            return RedirectToAction("Index"); 
+            // putem scrie RedirectToAction DOAR cu actiunea (FARA controller) daca vrem sa ne intoarcem in acelasi controller
+        }
     }
 }

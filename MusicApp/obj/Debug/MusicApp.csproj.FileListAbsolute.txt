@@ -121,3 +121,5 @@ C:\Users\teo\source\repos\MusicApp\obj\Debug\MusicApp.csproj.GenerateResource.ca
 C:\Users\teo\source\repos\MusicApp\obj\Debug\MusicApp.Migrations.NewTable_Albums.resources
 C:\Users\teo\source\repos\MusicApp\obj\Debug\MusicApp.Migrations.DropColumns_Songs_Album.resources
 C:\Users\teo\source\repos\MusicApp\obj\Debug\MusicApp.Migrations.AddColumns_Songs_Album.resources
+C:\Users\teo\source\repos\MusicApp\obj\Debug\MusicApp.Migrations.AddColumn_Songs_SongsNumber.resources
+C:\Users\teo\source\repos\MusicApp\obj\Debug\MusicApp.Migrations.DropColumn_Albums_SongsNumber.resources

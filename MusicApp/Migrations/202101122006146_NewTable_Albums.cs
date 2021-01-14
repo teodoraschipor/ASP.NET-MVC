@@ -18,7 +18,7 @@ namespace MusicApp.Migrations
                     })
                 .PrimaryKey(t => t.id);
             
-            AddColumn("dbo.Songs", "AlbumId", c => c.Int(nullable: false));
+            AddColumn("dbo.Songs", "AlbumId", c => c.Int(nullable: true));
             CreateIndex("dbo.Songs", "AlbumId");
             AddForeignKey("dbo.Songs", "AlbumId", "dbo.Albums", "id", cascadeDelete: true);
         }

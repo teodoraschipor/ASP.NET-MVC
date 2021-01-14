@@ -10,14 +10,18 @@ namespace MusicApp.Models
     {
         [Key]
         public int id { get; set; }
+
         [Required]
         public String Title { get; set; }
+
         [Required]
         public String ArtistName { get; set; }
+
         [Required]
         //     [OnlyInteger(ErrorMessage ="Introduce an year, please :)")]
         public int ReleaseYear { get; set; }
-        [Required]
-        public List<Song> SongsList { get; set; }
+
+      //  [Required]
+        public ICollection<Song> Songs { get; set; }
     }
 }

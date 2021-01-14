@@ -208,12 +208,23 @@
     <Compile Include="Migrations\202101131232585_AddColumns_Songs_Album.designer.cs">
       <DependentUpon>202101131232585_AddColumns_Songs_Album.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101131910194_AddColumn_Albums_SongsNumber.cs" />
+    <Compile Include="Migrations\202101131910194_AddColumn_Albums_SongsNumber.designer.cs">
+      <DependentUpon>202101131910194_AddColumn_Albums_SongsNumber.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101132345461_DropColumn_Albums_SongsNumber.cs" />
+    <Compile Include="Migrations\202101132345461_DropColumn_Albums_SongsNumber.designer.cs">
+      <DependentUpon>202101132345461_DropColumn_Albums_SongsNumber.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Album.cs" />
+    <Compile Include="Models\AudioHandler.cs" />
+    <Compile Include="Models\BeginCollectionItem.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Song.cs" />
+    <Compile Include="Models\UploadAudio.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site1.Master.cs">
@@ -230,6 +241,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\themes\all.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -272,9 +284,12 @@
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\bootstrap.min.js" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\jquery-3.4.1.slim.min.js" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="fonts\all.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
@@ -301,8 +316,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
@@ -327,17 +340,20 @@
     <Content Include="Views\Users\Details.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Users\Update.cshtml" />
+    <Content Include="Site1.Master" />
     <Content Include="Views\Albums\Create.cshtml" />
     <Content Include="Views\Albums\Details.cshtml" />
+    <Content Include="Views\Albums\Index.cshtml" />
     <Content Include="Views\Albums\Update.cshtml" />
     <Content Include="Views\Albums\_AlbumsListItem.cshtml" />
-    <Content Include="Views\Songs\Create.cshtml" />
     <Content Include="Views\Songs\Details.cshtml" />
     <Content Include="Views\Songs\Index.cshtml" />
     <Content Include="Views\Songs\Update.cshtml" />
     <Content Include="Views\Songs\_SongsListItem.cshtml" />
-    <Content Include="Views\Albums\Index.cshtml" />
-    <Content Include="Site1.Master" />
+    <Content Include="Views\Albums\UpdateSongs.cshtml" />
+    <Content Include="Views\Albums\DataTables.cshtml" />
+    <Content Include="Views\Songs\Create.cshtml" />
+    <Content Include="Views\Albums\AddSongsInAlbum.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -367,6 +383,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101131232585_AddColumns_Songs_Album.resx">
       <DependentUpon>202101131232585_AddColumns_Songs_Album.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101131910194_AddColumn_Albums_SongsNumber.resx">
+      <DependentUpon>202101131910194_AddColumn_Albums_SongsNumber.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101132345461_DropColumn_Albums_SongsNumber.resx">
+      <DependentUpon>202101132345461_DropColumn_Albums_SongsNumber.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
